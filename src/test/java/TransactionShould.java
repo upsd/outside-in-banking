@@ -1,5 +1,6 @@
 import org.junit.Test;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -8,7 +9,7 @@ import static org.junit.Assert.assertThat;
 public class TransactionShould {
 
     Transaction transaction = new Transaction(
-            new Money(50.50),
+            new Money(new BigDecimal(50.50)),
             TransactionType.DEPOSIT,
             LocalDate.of(2018, 10, 12)
     );

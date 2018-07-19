@@ -1,5 +1,6 @@
 import org.junit.Test;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -10,9 +11,9 @@ public class StatementFormatterShould {
     @Test
     public void format_statement_from_list_of_transactions() {
         Transactions transactions = new Transactions();
-        transactions.add(new Transaction(new Money(20), TransactionType.DEPOSIT, LocalDate.of(2018, 10, 12)));
-        transactions.add(new Transaction(new Money(15), TransactionType.DEPOSIT, LocalDate.of(2018, 10, 15)));
-        transactions.add(new Transaction(new Money(10), TransactionType.WITHDRAW, LocalDate.of(2018, 10, 20)));
+        transactions.add(new Transaction(new Money(new BigDecimal(20)), TransactionType.DEPOSIT, LocalDate.of(2018, 10, 12)));
+        transactions.add(new Transaction(new Money(new BigDecimal(15)), TransactionType.DEPOSIT, LocalDate.of(2018, 10, 15)));
+        transactions.add(new Transaction(new Money(new BigDecimal(10)), TransactionType.WITHDRAW, LocalDate.of(2018, 10, 20)));
 
         String statement = StatementFormatter.formatUsing(transactions, new ClockFormatter());
 

@@ -1,6 +1,7 @@
 import org.junit.Before;
 import org.junit.Test;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -25,7 +26,7 @@ public class TransactionControllerShould {
 
     @Test
     public void add_transactions() {
-        controller.add(new Transaction(new Money(100), TransactionType.WITHDRAW, LocalDate.of(2018, 10, 12)));
+        controller.add(new Transaction(new Money(new BigDecimal(100)), TransactionType.WITHDRAW, LocalDate.of(2018, 10, 12)));
 
         List<Transaction> transactions = controller.getTransactions().toList();
 
