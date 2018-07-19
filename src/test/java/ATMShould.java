@@ -11,13 +11,13 @@ public class ATMShould {
 
     private TestableTransactionController testableTransactionController;
     private ATM atm;
-    private Clock clock = mock(Clock.class);
+    private ClockFormatter clockFormatter = mock(ClockFormatter.class);
     private Console printer = mock(Console.class);
 
     @Before
     public void setup() {
         testableTransactionController = new TestableTransactionController();
-        atm = new ATM(printer, testableTransactionController, clock);
+        atm = new ATM(printer, testableTransactionController, clockFormatter);
     }
 
     @Test
@@ -44,7 +44,7 @@ public class ATMShould {
 
     @Test
     public void print_statement() {
-        when(clock.getDateAsString(any())).thenReturn("10/01/2012", "13/01/2012", "14/01/2012" );
+        when(clockFormatter.getDateAsString(any())).thenReturn("10/01/2012", "13/01/2012", "14/01/2012" );
 
         atm.deposit(new Money(10));
         atm.deposit(new Money(20));

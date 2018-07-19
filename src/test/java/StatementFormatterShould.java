@@ -14,7 +14,7 @@ public class StatementFormatterShould {
         transactions.add(new Transaction(new Money(15), TransactionType.DEPOSIT, LocalDate.of(2018, 10, 15)));
         transactions.add(new Transaction(new Money(10), TransactionType.WITHDRAW, LocalDate.of(2018, 10, 20)));
 
-        String statement = StatementFormatter.formatUsing(transactions, new Clock());
+        String statement = StatementFormatter.formatUsing(transactions, new ClockFormatter());
 
         assertThat(statement, is("date || credit || debit || balance\n" +
                 "20/10/2018 || || 10.00 || 25.00\n" +

@@ -1,4 +1,3 @@
-import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -7,7 +6,7 @@ public class StatementFormatter {
 
     private static final String HEADER = "date || credit || debit || balance";
 
-    public static String formatUsing(Transactions transactions, Clock clock) {
+    public static String formatUsing(Transactions transactions, ClockFormatter clockFormatter) {
         final double[] balance = {0};
 
         List<String> formattedTransactions = transactions
@@ -15,7 +14,7 @@ public class StatementFormatter {
                 .stream()
                 .map(t -> {
                     double amountRounded = t.amount();
-                    String date = clock.getDateAsString(t.date());
+                    String date = clockFormatter.getDateAsString(t.date());
 
                     if (t.type() == TransactionType.DEPOSIT) {
                         return String.format("%s || %.2f || || %.2f", date, amountRounded, (balance[0] += amountRounded));

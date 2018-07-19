@@ -7,10 +7,10 @@ public class BankAcceptanceTest {
     @Test
     public void should_print_statement_after_performing_transactions() {
         Console printer = mock(Console.class);
-        Clock clock = mock(Clock.class);
-        ATM atm = new ATM(printer, new TransactionController(), clock);
+        ClockFormatter clockFormatter = mock(ClockFormatter.class);
+        ATM atm = new ATM(printer, new TransactionController(), clockFormatter);
 
-        when(clock.getDateAsString(any())).thenReturn("10/01/2012", "13/01/2012", "14/01/2012" );
+        when(clockFormatter.getDateAsString(any())).thenReturn("10/01/2012", "13/01/2012", "14/01/2012" );
 
         atm.deposit(new Money(10));
         atm.deposit(new Money(20));

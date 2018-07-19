@@ -4,12 +4,12 @@ public class ATM {
 
     private Console printer;
     private TransactionController transactionController;
-    private Clock clock;
+    private ClockFormatter clockFormatter;
 
-    public ATM(Console printer, TransactionController transactionController, Clock clock) {
+    public ATM(Console printer, TransactionController transactionController, ClockFormatter clockFormatter) {
         this.printer = printer;
         this.transactionController = transactionController;
-        this.clock = clock;
+        this.clockFormatter = clockFormatter;
     }
 
     public void deposit(Money money) {
@@ -21,7 +21,7 @@ public class ATM {
     }
 
     public void print() {
-        String statement = StatementFormatter.formatUsing(this.transactionController.getTransactions(), this.clock);
+        String statement = StatementFormatter.formatUsing(this.transactionController.getTransactions(), this.clockFormatter);
         this.printer.print(statement);
     }
 }
