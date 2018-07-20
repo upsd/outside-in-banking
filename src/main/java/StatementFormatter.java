@@ -6,11 +6,10 @@ public class StatementFormatter {
 
     private static final String HEADER = "date || credit || debit || balance";
 
-    public static String formatUsing(Transactions transactions, ClockFormatter clockFormatter) {
+    public String formatUsing(List<Transaction> transactions, ClockFormatter clockFormatter) {
         final double[] balance = {0};
 
         List<String> formattedTransactions = transactions
-                .toList()
                 .stream()
                 .map(t -> {
                     double amountRounded = t.amount();

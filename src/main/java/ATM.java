@@ -21,7 +21,8 @@ public class ATM {
     }
 
     public void print() {
-        String statement = StatementFormatter.formatUsing(this.transactionController.getTransactions(), this.clockFormatter);
-        this.printer.print(statement);
+        this.transactionController.print(printer, clockFormatter);
+//        String statement = new StatementFormatter().formatUsing(this.transactionController.getTransactions(), this.clockFormatter);
+//        this.printer.print(statement);
     }
 }

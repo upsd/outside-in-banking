@@ -2,45 +2,38 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.math.BigDecimal;
-import java.util.List;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.*;
 
 public class ATMShould {
 
-    private TestableTransactionController testableTransactionController;
+    private TransactionController transactionController;
     private ATM atm;
     private ClockFormatter clockFormatter = mock(ClockFormatter.class);
     private Console printer = mock(Console.class);
 
     @Before
     public void setup() {
-        testableTransactionController = new TestableTransactionController();
-        atm = new ATM(printer, testableTransactionController, clockFormatter);
+        transactionController = mock(TransactionController.class);
+        atm = new ATM(printer, transactionController, clockFormatter);
     }
 
     @Test
     public void deposit_money() {
+        when(clockFormatter.getDateAsString(any())).thenReturn("10/01/2012");
+
         atm.deposit(new Money(new BigDecimal(500)));
 
-        List<Transaction> transactions = testableTransactionController.getTransactions().toList();
-
-        assertThat(transactions.size(), is(1));
-        assertThat(transactions.get(0).amount(), is(500.0));
-        assertThat(transactions.get(0).type(), is(TransactionType.DEPOSIT));
+        verify(transactionController).add(any());
     }
 
     @Test
     public void withdraw_money() {
+        when(clockFormatter.getDateAsString(any())).thenReturn("10/01/2012");
+
         atm.withdraw(new Money(new BigDecimal(100)));
 
-        List<Transaction> transactions = testableTransactionController.getTransactions().toList();
-
-        assertThat(transactions.size(), is(1));
-        assertThat(transactions.get(0).amount(), is(100.0));
-        assertThat(transactions.get(0).type(), is(TransactionType.WITHDRAW));
+        verify(transactionController).add(any());
     }
 
     @Test
@@ -53,24 +46,6 @@ public class ATMShould {
 
         atm.print();
 
-        verify(printer).print("date || credit || debit || balance\n" +
-                "14/01/2012 || || 5.00 || 25.00\n" +
-                "13/01/2012 || 20.00 || || 30.00\n" +
-                "10/01/2012 || 10.00 || || 10.00");
-    }
-
-    private class TestableTransactionController extends TransactionController {
-
-        private Transactions transactions = new Transactions();
-
-        @Override
-        public void add(Transaction transaction) {
-            this.transactions.add(transaction);
-        }
-
-        @Override
-        public Transactions getTransactions() {
-            return this.transactions;
-        }
+        verify(transactionController).print(printer, clockFormatter);
     }
 }

@@ -1,8 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.util.Collections.unmodifiableList;
-
 public class Transactions {
 
     private List<Transaction> transactions;
@@ -11,11 +9,12 @@ public class Transactions {
         this.transactions = new ArrayList<>();
     }
 
-    public List<Transaction> toList() {
-        return unmodifiableList(this.transactions);
-    }
-
     public void add(Transaction transaction) {
         this.transactions.add(transaction);
+    }
+
+    public void print(Console printer, StatementFormatter statementFormatter, ClockFormatter clockFormatter) {
+        String statement = statementFormatter.formatUsing(this.transactions, clockFormatter);
+        printer.print(statement);
     }
 }

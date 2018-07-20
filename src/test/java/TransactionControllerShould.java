@@ -1,35 +1,31 @@
 import org.junit.Before;
 import org.junit.Test;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.util.List;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 public class TransactionControllerShould {
 
+    private Transactions transactions = mock(Transactions.class);
     private TransactionController controller;
 
     @Before
     public void setup() {
-        controller = new TransactionController();
+        controller = new TransactionController(transactions);
     }
 
     @Test
-    public void has_no_transactions_by_default() {
-        List<Transaction> transactions = controller.getTransactions().toList();
+    public void add_transaction() {
+        controller.add(null);
 
-        assertThat(transactions.size(), is(0));
+        verify(transactions).add(any());
     }
 
     @Test
-    public void add_transactions() {
-        controller.add(new Transaction(new Money(new BigDecimal(100)), TransactionType.WITHDRAW, LocalDate.of(2018, 10, 12)));
+    public void print_transactions() {
+        controller.print(null, null);
 
-        List<Transaction> transactions = controller.getTransactions().toList();
-
-        assertThat(transactions.size(), is(1));
+        verify(transactions).print(any(), any(), any());
     }
 }
